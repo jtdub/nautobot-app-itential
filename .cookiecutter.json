@@ -1,0 +1,26 @@
+{
+    "cookiecutter": {
+        "codeowner_github_usernames": "jtdub",
+        "full_name": "Network to Code, LLC",
+        "email": "info@networktocode.com",
+        "github_org": "jtdub",
+        "app_name": "nautobot_itential",
+        "verbose_name": "Nautobot Itential",
+        "app_slug": "nautobot-itential",
+        "project_slug": "nautobot-app-itential",
+        "repo_url": "https://github.com/jtdub/nautobot-app-itential",
+        "base_url": "nautobot-itential",
+        "min_nautobot_version": "2.1.0",
+        "max_nautobot_version": "2.9999",
+        "camel_name": "NautobotItential",
+        "project_short_description": "Nautobot Itential",
+        "model_class_name": "AutomationGatewayModel",
+        "open_source_license": "Apache-2.0",
+        "docs_base_url": "https://docs.nautobot.com",
+        "docs_app_url": "https://docs.nautobot.com/projects/nautobot-itential/en/latest",
+        "_template": "https://github.com/nautobot/cookiecutter-nautobot-app",
+        "_output_dir": "/Users/jtdub/Documents/code/cookiecutter-nautobot-app/outputs",
+        "_repo_dir": "/Users/jtdub/.cookiecutters/cookiecutter-nautobot-app/nautobot-app",
+        "_checkout": null
+    }
+}
