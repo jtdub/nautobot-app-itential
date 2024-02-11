@@ -2,11 +2,11 @@
 
 from django.test import TestCase
 
-from nautobot_itential import models
-from nautobot_itential.tests import fixtures
-
 from nautobot.dcim.models import Location
 from nautobot.extras.models import ExternalIntegration
+
+from nautobot_itential import models
+from nautobot_itential.tests import fixtures
 
 
 class TestAutomationGatewayModel(TestCase):
