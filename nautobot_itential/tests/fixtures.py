@@ -35,15 +35,15 @@ def create_external_integrations():
 
 def create_automationgatewaymodel():
     """Fixture to create necessary number of AutomationGatewayModel for tests."""
-    create_location()
+    create_locations()
     create_external_integrations()
 
     nyc = Location.objects.get(name="NYC")
     aus = Location.objects.get(name="AUS")
     lax = Location.objects.get(name="LAX")
-    nyc_gateway = ExternalIntegration.objects.get(name="NYC")
-    aus_gateway = ExternalIntegration.objects.get(name="AUS")
-    lax_gateway = ExternalIntegration.objects.get(name="LAX")
+    nyc_gateway = ExternalIntegration.objects.get(name="NYC external gateway")
+    aus_gateway = ExternalIntegration.objects.get(name="AUS external gateway")
+    lax_gateway = ExternalIntegration.objects.get(name="LAX external gateway")
 
     AutomationGatewayModel.objects.create(name="NYC Gateway", location=nyc, gateway=nyc_gateway, enabled=True)
     AutomationGatewayModel.objects.create(name="AUS Gateway", location=aus, gateway=aus_gateway, enabled=True)
