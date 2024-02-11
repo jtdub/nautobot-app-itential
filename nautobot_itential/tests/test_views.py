@@ -1,8 +1,9 @@
 """Unit tests for views."""
-from nautobot.apps.testing import ViewTestCases
 
-from nautobot_itential import models
-from nautobot_itential.tests import fixtures
+# from nautobot.apps.testing import ViewTestCases
+
+# from nautobot_itential import models
+# from nautobot_itential.tests import fixtures
 
 
 # class AutomationGatewayModelViewTest(ViewTestCases.PrimaryObjectViewTestCase):

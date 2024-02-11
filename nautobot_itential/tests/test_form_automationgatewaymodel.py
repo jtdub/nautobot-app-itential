@@ -1,7 +1,8 @@
 """Test automationgatewaymodel forms."""
+
 from django.test import TestCase
 
-from nautobot_itential import forms, models
+from nautobot_itential import forms
 from nautobot_itential.tests import fixtures
 
 from nautobot.dcim.models import Location

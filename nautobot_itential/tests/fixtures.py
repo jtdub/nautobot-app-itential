@@ -1,4 +1,5 @@
 """Create fixtures for tests."""
+
 from nautobot.dcim.models import Location, LocationType
 from nautobot.extras.models import ExternalIntegration, Status
 from nautobot_itential.models import AutomationGatewayModel

@@ -1,4 +1,5 @@
 """Views for nautobot_itential."""
+
 from nautobot.apps.views import NautobotUIViewSet
 
 from nautobot_itential import filters, forms, models, tables
