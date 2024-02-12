@@ -25,6 +25,9 @@ def create_external_integrations():
         {"name": "NYC external gateway", "url": "https://iag.nyc.example.com"},
         {"name": "AUS external gateway", "url": "https://iag.aus.example.com"},
         {"name": "LAX external gateway", "url": "https://iag.lax.example.com"},
+        {"name": "API View gateway1", "url": "https://apiview1.example.com"},
+        {"name": "API View gateway2", "url": "https://apiview2.example.com"},
+        {"name": "API View gateway3", "url": "https://apiview3.example.com"},
     ]
 
     for item in data:
