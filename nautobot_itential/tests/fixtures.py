@@ -28,6 +28,10 @@ def create_external_integrations():
         {"name": "API View gateway1", "url": "https://apiview1.example.com"},
         {"name": "API View gateway2", "url": "https://apiview2.example.com"},
         {"name": "API View gateway3", "url": "https://apiview3.example.com"},
+        {"name": "Bulk View gateway1", "url": "https://bulkview1.example.com"},
+        {"name": "Bulk View gateway2", "url": "https://bulkview2.example.com"},
+        {"name": "Bulk View gateway3", "url": "https://bulkview3.example.com"},
+        {"name": "Bulk View gateway4", "url": "https://bulkview4.example.com"},
     ]
 
     for item in data:
