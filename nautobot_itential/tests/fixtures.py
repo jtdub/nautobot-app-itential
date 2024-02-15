@@ -3,7 +3,7 @@
 from django.contrib.contenttypes.models import ContentType
 from nautobot.dcim.models import Location, LocationType, Device, DeviceType, Manufacturer, Platform
 from nautobot.extras.models import ExternalIntegration, Status, Role
-from nautobot_itential.models import AutomationGatewayModel
+from nautobot_itential.models import AutomationGatewayModel, InventoryGroupModel
 
 
 def create_locations():
@@ -153,3 +153,23 @@ def create_automationgatewaymodel():
         AutomationGatewayModel.objects.create(
             name=item["name"], location=item["location"], gateway=item["gateway"], enabled=True
         )
+
+
+def create_inventorygroupmodel():
+    """Fixture to create necessary number of InventoryGroupModel for tests."""
+    create_devices()
+
+    data = [
+        {
+            "name": "Cisco IOSXR",
+            "context": {
+                "ansible_connection": "ansible.netcommon.network_cli",
+                "ansible_network_os": "cisco.iosxr.iosxr",
+            },
+            "device": Device.objects.get(name="router1"),
+        },
+    ]
+
+    for item in data:
+        group = InventoryGroupModel.objects.create(name=item["name"], context=item["context"])
+        group.devices.add(item["device"])

@@ -15,3 +15,15 @@ class AutomationGatewayModelFilterSet(NautobotFilterSet, NameSearchFilterSet):  
 
         # add any fields from the model that you would like to filter your searches by using those
         fields = ["id", "name", "description", "gateway", "location", "enabled"]
+
+
+class InventoryGroupModelFilterSet(NautobotFilterSet, NameSearchFilterSet):  # pylint: disable=too-many-ancestors
+    """Filter for InventoryGroupModel."""
+
+    class Meta:
+        """Meta attributes for filter."""
+
+        model = models.InventoryGroupModel
+
+        # add any fields from the model that you would like to filter your searches by using those
+        fields = ["id", "name", "description", "context", "devices", "platforms"]
