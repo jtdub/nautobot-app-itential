@@ -15,3 +15,14 @@ class AutomationGatewayModelViewSet(NautobotModelViewSet):  # pylint: disable=to
 
     # Option for modifying the default HTTP methods:
     # http_method_names = ["get", "post", "put", "patch", "delete", "head", "options", "trace"]
+
+
+class InventoryGroupModelViewSet(NautobotModelViewSet):  # pylint: disable=too-many-ancestors
+    """InventoryGroupModel viewset."""
+
+    queryset = models.InventoryGroupModel.objects.all()
+    serializer_class = serializers.InventoryGroupModelSerializer
+    filterset_class = filters.InventoryGroupModelFilterSet
+
+    # Option for modifying the default HTTP methods:
+    # http_method_names = ["get", "post", "put", "patch", "delete", "head", "options", "trace"]

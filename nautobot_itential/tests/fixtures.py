@@ -1,14 +1,15 @@
 """Create fixtures for tests."""
 
-from nautobot.dcim.models import Location, LocationType
-from nautobot.extras.models import ExternalIntegration, Status
-from nautobot_itential.models import AutomationGatewayModel
+from django.contrib.contenttypes.models import ContentType
+from nautobot.dcim.models import Location, LocationType, Device, DeviceType, Manufacturer, Platform
+from nautobot.extras.models import ExternalIntegration, Status, Role
+from nautobot_itential.models import AutomationGatewayModel, InventoryGroupModel
 
 
 def create_locations():
     """Fixtures to create location data used for tests."""
-    site = LocationType.objects.create(name="Site")
     status = Status.objects.get(name="Active")
+    site, _ = LocationType.objects.update_or_create(name="Site")
     data = [
         {"site": "NYC"},
         {"site": "AUS"},
@@ -17,6 +18,95 @@ def create_locations():
 
     for item in data:
         Location.objects.update_or_create(name=item["site"], location_type=site, status=status)
+
+
+def create_manufacturers():
+    """Fixtures to create manufacturer data used for tests."""
+    data = ["Cisco", "Arista"]
+
+    for item in data:
+        Manufacturer.objects.update_or_create(name=item)
+
+
+def create_platforms():
+    """Fixtures to create platform data used for tests."""
+    create_manufacturers()
+
+    cisco = Manufacturer.objects.get(name="Cisco")
+    arista = Manufacturer.objects.get(name="Arista")
+    data = [
+        {"name": "Cisco IOSXR", "network_driver": "cisco_xr", "manufacturer": cisco},
+        {"name": "Cisco IOS", "network_driver": "cisco_ios", "manufacturer": cisco},
+        {"name": "Arista EOS", "network_driver": "arista_eos", "manufacturer": arista},
+    ]
+
+    for item in data:
+        Platform.objects.update_or_create(
+            name=item["name"], network_driver=item["network_driver"], manufacturer=item["manufacturer"]
+        )
+
+
+def create_device_types():
+    """Fixtures to create device_type data used for tests."""
+    create_manufacturers()
+
+    cisco = Manufacturer.objects.get(name="Cisco")
+    arista = Manufacturer.objects.get(name="Arista")
+
+    data = [
+        {"name": cisco, "model": "NCS 5501"},
+        {"name": cisco, "model": "Catalyst 8300"},
+        {"name": arista, "model": "7280R"},
+    ]
+
+    for item in data:
+        DeviceType.objects.update_or_create(manufacturer=item["name"], model=item["model"])
+
+
+def create_roles():
+    """Fixtures to crate role data used for tests."""
+    device_content_type = ContentType.objects.get(app_label="dcim", model="device")
+
+    data = [{"name": "Router", "content_types": device_content_type}]
+
+    for item in data:
+        role, _ = Role.objects.update_or_create(name=item["name"])
+        role.content_types.add(device_content_type)
+        role.save()
+
+
+def create_devices():
+    """Fixtures to create device data used for tests."""
+    create_roles()
+    create_device_types()
+    create_platforms()
+    create_locations()
+
+    status = Status.objects.get(name="Active")
+    role = Role.objects.get(name="Router")
+    cisco_xr = Platform.objects.get(name="Cisco IOSXR")
+    cisco_ios = Platform.objects.get(name="Cisco IOS")
+    arista_eos = Platform.objects.get(name="Arista EOS")
+    cisco_xr_type = DeviceType.objects.get(model="NCS 5501")
+    cisco_ios_type = DeviceType.objects.get(model="Catalyst 8300")
+    arista_eos_type = DeviceType.objects.get(model="7280R")
+    location = Location.objects.first()
+
+    data = [
+        {"name": "router1", "location": location, "device_type": cisco_xr_type, "role": role, "platform": cisco_xr},
+        {"name": "router2", "location": location, "device_type": cisco_ios_type, "role": role, "platform": cisco_ios},
+        {"name": "router3", "location": location, "device_type": arista_eos_type, "role": role, "platform": arista_eos},
+    ]
+
+    for item in data:
+        Device.objects.update_or_create(
+            name=item["name"],
+            location=item["location"],
+            device_type=item["device_type"],
+            role=item["role"],
+            platform=item["platform"],
+            status=status,
+        )
 
 
 def create_external_integrations():
@@ -53,6 +143,33 @@ def create_automationgatewaymodel():
     aus_gateway = ExternalIntegration.objects.get(name="AUS external gateway")
     lax_gateway = ExternalIntegration.objects.get(name="LAX external gateway")
 
-    AutomationGatewayModel.objects.create(name="NYC Gateway", location=nyc, gateway=nyc_gateway, enabled=True)
-    AutomationGatewayModel.objects.create(name="AUS Gateway", location=aus, gateway=aus_gateway, enabled=True)
-    AutomationGatewayModel.objects.create(name="LAX Gateway", location=lax, gateway=lax_gateway, enabled=True)
+    data = [
+        {"name": "NYC Gateway", "location": nyc, "gateway": nyc_gateway},
+        {"name": "AUS Gateway", "location": aus, "gateway": aus_gateway},
+        {"name": "LAX Gateway", "location": lax, "gateway": lax_gateway},
+    ]
+
+    for item in data:
+        AutomationGatewayModel.objects.create(
+            name=item["name"], location=item["location"], gateway=item["gateway"], enabled=True
+        )
+
+
+def create_inventorygroupmodel():
+    """Fixture to create necessary number of InventoryGroupModel for tests."""
+    create_devices()
+
+    data = [
+        {
+            "name": "Cisco IOSXR",
+            "context": {
+                "ansible_connection": "ansible.netcommon.network_cli",
+                "ansible_network_os": "cisco.iosxr.iosxr",
+            },
+            "device": Device.objects.get(name="router1"),
+        },
+    ]
+
+    for item in data:
+        group = InventoryGroupModel.objects.create(name=item["name"], context=item["context"])
+        group.devices.add(item["device"])

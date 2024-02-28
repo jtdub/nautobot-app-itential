@@ -1,0 +1,17 @@
+Initial creation of the Nautobot Itential app.
+
+Creates the following models:
+- AutomationGatewayModel
+- InventoryGroupModel
+
+## AutomationGatewayModel
+
+Models Itential Automaiton Gateways, using extras.models.ExternalIntegration model and dcim.models.Location to associate an external integration (Itential Automation Gateway) with a location and descendant locations.
+
+## InventoryGroupModel
+
+Provides extra context to inventory groups that can be associated with extras.models.Device(s) or dcim.models.Platform(s).
+
+## Documentation
+
+Creates initial documentation.

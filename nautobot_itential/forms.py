@@ -53,3 +53,49 @@ class AutomationGatewayModelFilterForm(NautobotFilterForm):
         help_text="Search within Name or Slug.",
     )
     name = forms.CharField(required=False, label="Name")
+
+
+class InventoryGroupModelForm(NautobotModelForm):  # pylint: disable=too-many-ancestors
+    """InventoryGroupModel creation/edit form."""
+
+    class Meta:
+        """Meta attributes."""
+
+        model = models.InventoryGroupModel
+        fields = [
+            "name",
+            "description",
+            "context",
+        ]
+
+
+class InventoryGroupModelBulkEditForm(
+    TagsBulkEditFormMixin, NautobotBulkEditForm
+):  # pylint: disable=too-many-ancestors
+    """InventoryGroupModel bulk edit form."""
+
+    pk = forms.ModelMultipleChoiceField(
+        queryset=models.InventoryGroupModel.objects.all(), widget=forms.MultipleHiddenInput
+    )
+    description = forms.CharField(required=False)
+
+    class Meta:
+        """Meta attributes."""
+
+        nullable_fields = [
+            "description",
+        ]
+
+
+class InventoryGroupModelFilterForm(NautobotFilterForm):
+    """Filter form to filter searches."""
+
+    model = models.InventoryGroupModel
+    field_order = ["q", "name"]
+
+    q = forms.CharField(
+        required=False,
+        label="Search",
+        help_text="Search within Name or Slug.",
+    )
+    name = forms.CharField(required=False, label="Name")
