@@ -18,3 +18,18 @@ class AutomationGatewayModelSerializer(
 
         # Option for disabling write for certain fields:
         # read_only_fields = []
+
+
+class InventoryGroupModelSerializer(
+    NautobotModelSerializer, TaggedModelSerializerMixin
+):  # pylint: disable=too-many-ancestors
+    """InventoryGroupModel Serializer."""
+
+    class Meta:
+        """Meta attributes."""
+
+        model = models.InventoryGroupModel
+        fields = "__all__"
+
+        # Option for disabling write for certain fields:
+        # read_only_fields = []

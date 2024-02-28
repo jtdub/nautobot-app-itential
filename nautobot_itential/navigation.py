@@ -15,6 +15,17 @@ items = (
             ),
         ),
     ),
+    NavMenuItem(
+        link="plugins:nautobot_itential:inventorygroupmodel_list",
+        name="Inventory Group",
+        permissions=["nautobot_itential.view_inventorygroupmodel"],
+        buttons=(
+            NavMenuAddButton(
+                link="plugins:nautobot_itential:inventorygroupmodel_add",
+                permissions=["nautobot_itential.add_inventorygroupmodel"],
+            ),
+        ),
+    ),
 )
 
 menu_items = (
